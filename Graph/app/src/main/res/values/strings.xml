@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">GraphTest</string>
+
+
+    <string name="staticLineGraphMenu_save">SAVE</string>
+
+    <string name="temp_text">xxxxx</string>
+
+    <string name="StaticLineGraph_Description">StaticLineGraphSample</string>
+    <string name="StaticMultiLineGraph_Description">StaticMultiLineGraphSample</string>
+    <string name="DynamicLineGraph_Description">DynamicLineGraphSample</string>
+    <string name="DynamicMultiLineGraph_Description">DynamicMultiLineGraphSample</string>
+    <string name="StaticVerticalBarGraph_Description">StaticVerticalBarGraphSample</string>
+
+    <string name="sine_wave">Sine Wave</string>
+    <string name="cosine_wave">Cosine Wave</string>
+    <string name="tangent_wave">Tangent Wave</string>
+
+    <string name="pi_label">%1$dπ</string>
+
+    <string-array name="SampleLists">
+        <item>StaticLineGraph</item>
+        <item>StaticMultiLineGraph</item>
+        <item>DynamicLineGraph</item>
+        <item>DynamicMultiLineGraph</item>
+        <item>StaticVerticalBarGraph</item>
+    </string-array>
+
+    <string-array name="Month">
+        <item>Jan.</item>
+        <item>Feb.</item>
+        <item>Mar.</item>
+        <item>Apr.</item>
+        <item>May</item>
+        <item>Jun.</item>
+        <item>Jul.</item>
+        <item>Aug.</item>
+        <item>Sep.</item>
+        <item>Oct.</item>
+        <item>Nov.</item>
+        <item>Dec.</item>
+    </string-array>
+</resources>
