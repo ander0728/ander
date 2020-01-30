@@ -22,6 +22,8 @@ public class GraphData {
     private static int maxOvertone = 100;
 
     public enum Logics {
+        //R.values.stringsのリストデータと合致させること
+
         /** 1/n 減衰 */
         Fraction,
         /** x^(-n) 減衰 */
@@ -84,10 +86,10 @@ public class GraphData {
                     }
                     switch (logic){
                         case Fraction:
-                            val += (float) Math.sin((Math.PI / resolution) * i * jnx) / Math.pow(Math.abs(jnx), nPower) ;
+                            val += (float) Math.sin((Math.PI / resolution) * i * jnx) / Math.pow(jnx, nPower) ;
                             break;
                         case Multiplier:
-                            val += (float) Math.pow(Math.sin((Math.PI / resolution) * i * jnx), Math.pow(jnx, nPower));
+                            val += (float) Math.pow(Math.sin((Math.PI / resolution) * i * jnx), -Math.pow(jnx, nPower));
                             break;
                         default:
                             break;

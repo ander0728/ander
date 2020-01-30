@@ -128,7 +128,6 @@ public class SettingBtnsFragment extends Fragment {
                 GraphData graphData = GraphData.getInstance();
                 graphData.getGraphData().clearValues();
 
-                int nx = Integer.parseInt(editX.getText().toString());
                 graphData.setData(1000, 100 ,
                         Integer.parseInt(editX.getText().toString()),
                         Integer.parseInt(editY.getText().toString()),
