@@ -26,6 +26,12 @@
         <item>StaticVerticalBarGraph</item>
     </string-array>
 
+    <string-array name="LogicList">
+    <item>Default</item>
+    <item>Fraction</item>
+    <item>Multiplier</item>
+    </string-array>
+
     <string-array name="Month">
         <item>Jan.</item>
         <item>Feb.</item>

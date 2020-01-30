@@ -21,7 +21,7 @@ public class GraphData {
     private static int root = 440;
     private static int maxOvertone = 100;
 
-    public  enum Logics {
+    public enum Logics {
         /** 1/n 減衰 */
         Fraction,
         /** x^(-n) 減衰 */
@@ -61,48 +61,53 @@ public class GraphData {
 
         ArrayList<Entry> datas = new ArrayList<>(itemCount);
 
-        switch (logic){
-            case Default:
-                for(int i = 0; i < itemCount; i++) {
-                    // 数値を生成
-                    float val = (float) Math.sin((Math.PI / resolution) * i );
-                    // (x, y) = (i, val)として座標データをセット
-                    datas.add(new Entry(i, val));
-                }
-                break;
+        if(logic == Logics.Default) {
+            for (int i = 0; i < itemCount; i++) {
+                // 数値を生成
+                float val = (float) Math.sin((Math.PI / resolution) * i);
+                // (x, y) = (i, val)として座標データをセット
+                datas.add(new Entry(i, val));
+            }
+        } else {
+            ArrayList<Float> list = new ArrayList<>();
+            float max = 0 ;
 
-            case Fraction:
-                ArrayList<Float> list = new ArrayList<>();
-                float max = 0 ;
-
-                //ロジック部
-                for(int i = 0; i < itemCount; i++) {
-                    float val = 0;
-                    for(int j = 1; j <= maxOvertone; j++){
-                        float jnx;
-                        if (isOdd){
-                            jnx = 2 * j - 1;
-                        } else {
-                            jnx = nx * j;
-                        }
-                        val += (float) Math.sin((Math.PI / resolution) * i * Math.pow(Math.abs(jnx), nPower)) / jnx;
+            //ロジック部
+            for(int i = 0; i < itemCount; i++) {
+                float val = 0;
+                for(int j = 1; j <= maxOvertone; j++){
+                    float jnx;
+                    if (isOdd){
+                        jnx = 2 * j - 1;
+                    } else {
+                        jnx = nx * j;
                     }
-                    list.add(i, val);
-
-                    // 最大値を取得する
-                    if(i == 0){
-                        max = val;
-                    } else if ( max < val ){
-                        max = val;
+                    switch (logic){
+                        case Fraction:
+                            val += (float) Math.sin((Math.PI / resolution) * i * jnx) / Math.pow(Math.abs(jnx), nPower) ;
+                            break;
+                        case Multiplier:
+                            val += (float) Math.pow(Math.sin((Math.PI / resolution) * i * jnx), Math.pow(jnx, nPower));
+                            break;
+                        default:
+                            break;
                     }
-                }
-                //最大値が1になるように全体にamplifyを掛ける
-                float amplify = 1f/max;
-                for (int i = 0; i < list.size(); i++){
-                    datas.add(new Entry(i, list.get(i) * amplify));
-                }
-                break;
 
+                }
+                list.add(i, val);
+
+                // 最大値を取得する
+                if(i == 0){
+                    max = val;
+                } else if ( max < val ){
+                    max = val;
+                }
+            }
+            //最大値が1になるように全体にamplifyを掛ける
+            float amplify = 1f/max;
+            for (int i = 0; i < list.size(); i++){
+                datas.add(new Entry(i, list.get(i) * amplify));
+            }
         }
 
         // 第一引数にデータ、第二引数にラベル名を設定する
@@ -118,6 +123,7 @@ public class GraphData {
         LineData lineData = new LineData(dataSets);
         mLineChart.setData(lineData);
     }
+
 
     public  LineChart getGraphData(){
         return mLineChart;
