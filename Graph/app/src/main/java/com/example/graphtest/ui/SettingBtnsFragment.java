@@ -1,6 +1,6 @@
 package com.example.graphtest.ui;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,6 +103,7 @@ public class SettingBtnsFragment extends Fragment {
                 // グラフに値をセットする
                 GraphData graphData = GraphData.getInstance();
                 graphData.getGraphData().clearValues();
+                graphData.getBarData().clearValues();
                 graphData.setData(1000, 200 , -3, 2,false, GraphData.Logics.Fraction);
                 graphData.getGraphData().notifyDataSetChanged();
             }
@@ -115,6 +116,7 @@ public class SettingBtnsFragment extends Fragment {
                 // グラフに値をセットする
                 GraphData graphData = GraphData.getInstance();
                 graphData.getGraphData().clearValues();
+                graphData.getBarData().clearValues();
                 graphData.setData(1000, 100 , 2, 1, true, GraphData.Logics.Fraction);
                 graphData.getGraphData().notifyDataSetChanged();
             }
@@ -127,6 +129,7 @@ public class SettingBtnsFragment extends Fragment {
                 // グラフに値をセットする
                 GraphData graphData = GraphData.getInstance();
                 graphData.getGraphData().clearValues();
+                graphData.getBarData().clearValues();
 
                 graphData.setData(1000, 100 ,
                         Integer.parseInt(editX.getText().toString()),

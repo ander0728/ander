@@ -13,7 +13,6 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import androidx.annotation.NonNull;
@@ -40,17 +39,28 @@ public class SyntheticWaveGraphFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //         グラフViewを初期化する
-        initChart();
-
-        // グラフに値をセットする
-        GraphData.getInstance().setData(1000, 100 ,1,1,false, GraphData.Logics.Default);
+        initLineChart();
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //ここだとBarCharFragmentのonViewCreatedより先に呼ばれた
     }
 
 
-    private void initChart() {
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // グラフに値をセットする
+        GraphData.getInstance().setData(1000, 100 ,1,1,false, GraphData.Logics.Default);
+
+    }
+
+    private void initLineChart(){
         // 線グラフView
         LineChart mLineChart ;
-        mLineChart = (LineChart) getView().findViewById(R.id.chart_StaticLineGraph);
+        mLineChart = getView().findViewById(R.id.chart_StaticLineGraph);
 
         // グラフ説明テキストを表示するか
         mLineChart.getDescription().setEnabled(true);
@@ -117,7 +127,6 @@ public class SyntheticWaveGraphFragment extends Fragment {
             }
         });
         GraphData.getInstance().setGraphData(mLineChart);
-
     }
 
 

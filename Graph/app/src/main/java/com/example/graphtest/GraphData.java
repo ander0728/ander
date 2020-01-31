@@ -5,7 +5,11 @@ import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -18,6 +22,8 @@ import java.util.Optional;
 public class GraphData {
 
     private static LineChart mLineChart;
+    private static BarChart mBarChart;
+
     private static int root = 440;
     private static int maxOvertone = 100;
 
@@ -89,7 +95,7 @@ public class GraphData {
                             val += (float) Math.sin((Math.PI / resolution) * i * jnx) / Math.pow(jnx, nPower) ;
                             break;
                         case Multiplier:
-                            val += (float) Math.pow(Math.sin((Math.PI / resolution) * i * jnx), -Math.pow(jnx, nPower));
+                            val += (float) Math.pow(Math.sin((Math.PI / resolution) * i * jnx), Math.pow(jnx, nPower));
                             break;
                         default:
                             break;
@@ -113,7 +119,7 @@ public class GraphData {
         }
 
         // 第一引数にデータ、第二引数にラベル名を設定する
-        LineDataSet lineDataSet = new LineDataSet(datas, "label");
+        LineDataSet lineDataSet = new LineDataSet(datas, "波形");
 
         // 値のプロット点を描かない
         lineDataSet.setDrawCircles(false);
@@ -124,14 +130,50 @@ public class GraphData {
         dataSets.add(lineDataSet);
         LineData lineData = new LineData(dataSets);
         mLineChart.setData(lineData);
+
+
+
+        //BarChartに入れる部分（上記ロジック部の減衰法と仕様を合わせること）
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        int jnx = 1, count = 1;
+        outside: while( Math.abs(jnx) < maxOvertone) {
+            if (isOdd){
+                jnx = 2 * count - 1;
+            } else {
+                jnx = Math.abs(nx) * count;
+            }
+            switch (logic){
+                case Fraction:
+                    entries.add(new BarEntry(jnx,(float)(1/ Math.pow(jnx, nPower)) ));
+                    break;
+                case Multiplier:
+                    entries.add(new BarEntry(jnx,(float) Math.pow(1, -Math.pow(jnx, nPower)) ));
+                    break;
+                case Default:
+                    entries.add(new BarEntry(1,1));
+                    break outside;
+            }
+            count++;
+        }
+
+        BarDataSet barDataSet = new BarDataSet(entries, "周波数分布");
+        barDataSet.setColor(Color.BLUE);
+        BarData barData =new BarData(barDataSet);
+        mBarChart.setData(barData);
     }
 
 
     public  LineChart getGraphData(){
         return mLineChart;
     }
-    public  void setGraphData(LineChart mlineChart){
-        this.mLineChart = mlineChart;
+    public  void setGraphData(LineChart mLineChart){
+        this.mLineChart = mLineChart;
+    }
+    public  BarChart getBarData(){
+        return mBarChart;
+    }
+    public  void setBarData(BarChart mBarChart){
+        this.mBarChart = mBarChart;
     }
 
     public static int getRoot() {

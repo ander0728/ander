@@ -21,6 +21,7 @@ public class StaticGraphActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerWaveGraph, new SyntheticWaveGraphFragment());
+        fragmentTransaction.replace(R.id.containerBarChart, new BarChartFragment());
         fragmentTransaction.replace(R.id.containerSettingBtns, new SettingBtnsFragment());
         fragmentTransaction.commit();
     }
